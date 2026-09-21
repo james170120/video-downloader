@@ -93,10 +93,21 @@ if st.button("🚀 開始解析並下載"):
                 os.makedirs(download_folder)
 
             ydl_opts = {
-                'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-                'outtmpl': f'{download_folder}/%(title)s.%(ext)s',
-                'merge_output_format': 'mp4',
-                'noplaylist': True,
+            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            'outtmpl': f'{download_folder}/%(title)s.%(ext)s',
+            'merge_output_format': 'mp4',
+            'noplaylist': True,
+            # === 以下為新增的防阻擋參數 ===
+            'source_address': '0.0.0.0',  # 強制使用 IPv4 避免雲端 IPv6 被封鎖
+            'extractor_args': {
+                'youtube': {
+                    'player_client': ['android', 'web']  # 偽裝成 Android 手機版與一般網頁版
+                }
+            },
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+            }
+        }
             }
 
             try:
