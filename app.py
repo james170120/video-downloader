@@ -2,86 +2,92 @@ import streamlit as st
 import yt_dlp
 import os
 
-# 1. 設定網頁基本資訊 (必須放在所有 st 指令的最前面)
-st.set_page_config(
-    page_title="智慧影音下載神器",
-    page_icon="🎬",
-    layout="centered"
-)
+# 1. 設定網頁基本資訊
+st.set_page_config(page_title="智慧影音下載神器", page_icon="🎬", layout="centered")
 
-# 2. 注入自訂 CSS 來完全對齊你原本的網站風格
+# 2. 升級版 CSS：修復文字顏色衝突、增強卡片立體感
 st.markdown("""
     <style>
-    /* 隱藏 Streamlit 預設的右上角選單、Header 與底部浮水印，讓它看起來像你網站的一部分 */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
+    #MainMenu, header, footer {visibility: hidden;}
     
-    /* 更改整體背景顏色為淺灰藍色，對齊你原本網站的 --primary-bg */
+    /* 確保整體背景為淺灰藍色 */
     .stApp {
         background-color: #f4f7fb;
     }
     
-    /* 將主內容區塊包裝成白色卡片風格，加上圓角與陰影 */
-    .main .block-container {
-        background-color: #ffffff;
-        padding: 3rem 4rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        border: 1px solid rgba(0,0,0,0.02);
-        margin-top: 3rem;
-        max-width: 800px;
+    /* 強制所有文字變成深藍灰，避免瀏覽器深色模式干擾 */
+    html, body, [class*="st-"] {
+        color: #2c3e50 !important;
     }
     
-    /* 自訂按鈕樣式 (對齊你網站的 btn-blue 風格) */
+    /* 讓主內容區塊變成一個帶有陰影的立體卡片 */
+    [data-testid="block-container"] {
+        background-color: #ffffff;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        border: 1px solid rgba(0,0,0,0.03);
+        margin-top: 3rem;
+        max-width: 700px;
+    }
+    
+    /* 👑 修復輸入框：確保背景微灰、文字深色清晰 */
+    .stTextInput input {
+        background-color: #f8fafc !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 14px 16px !important;
+        font-size: 1.05rem !important;
+        color: #0f172a !important; /* 確保輸入的網址是深色的 */
+        font-weight: 500 !important;
+    }
+    .stTextInput input:focus {
+        border-color: #3a86ff !important;
+        box-shadow: 0 0 0 4px rgba(58, 134, 255, 0.15) !important;
+        background-color: #ffffff !important;
+    }
+    
+    /* 升級按鈕質感 */
     .stButton>button {
         background-color: #0ea5e9;
-        color: white;
+        color: white !important;
         border-radius: 12px;
         border: none;
-        padding: 12px 24px;
+        padding: 14px 24px;
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         transition: all 0.2s;
         width: 100%;
-        box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
+        box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);
+        margin-top: 15px;
     }
     .stButton>button:hover {
         background-color: #0284c7;
         transform: translateY(-2px);
-        color: white;
-    }
-    
-    /* 輸入框樣式對齊 */
-    .stTextInput>div>div>input {
-        background-color: #f8fafc;
-        border: 1px solid #dce4ec;
-        border-radius: 10px;
-        padding: 12px;
-        font-size: 1rem;
-    }
-    .stTextInput>div>div>input:focus {
-        border-color: #3a86ff;
-        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15);
-        background-color: #ffffff;
-    }
-    
-    /* 標題文字顏色微調 */
-    h1, h2, h3, p {
-        color: #2c3e50 !important;
+        box-shadow: 0 6px 15px rgba(14, 165, 233, 0.35);
     }
     </style>
 """, unsafe_allow_html=True)
 
 # 3. 網頁主要內容
 st.title("🎬 智慧影音下載神器")
-st.write("貼上影音網址，系統會自動在雲端解析並提供 MP4 下載連結。")
+st.markdown("只需貼上影音網址，系統會自動在雲端解析，並提供最高畫質的 MP4 檔案。")
+
+# 加入展開說明區塊，讓畫面不空洞且更專業
+with st.expander("💡 支援哪些網站？ (點擊展開)", expanded=False):
+    st.write("""
+    本神器核心採用強大的開源套件，支援超過百種影音平台，包含：
+    * **YouTube** (一般影片與 Shorts)
+    * **Instagram** (Reels 短影音、貼文影片)
+    * **Facebook** (公開社團或粉專影片)
+    * **Bilibili (B站)**、**Twitter / X** 等各大平台
+    """)
 
 url = st.text_input("請貼上想要下載的影音網址：", placeholder="例如：https://www.youtube.com/watch?v=...")
 
-if st.button("開始解析並下載"):
+if st.button("🚀 開始解析並下載"):
     if url:
-        with st.spinner("影片下載與轉檔中，請耐心稍候..."):
+        with st.spinner("影片下載與轉檔中，請耐心稍候 (時間取決於影片長短)..."):
             download_folder = 'download'
             if not os.path.exists(download_folder):
                 os.makedirs(download_folder)
