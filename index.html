@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 智慧影音下載神器</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid #eef2f7;
+        }
+        h1 { color: #2c3e50; font-size: 1.8rem; margin-top: 0; text-align: center; }
+        .section {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+        .section.warning {
+            border-left-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .section-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; }
+        .section p { margin: 0 0 10px 0; font-size: 0.95rem; line-height: 1.6; color: #475569; }
+        .section p:last-child { margin-bottom: 0; }
+        .download-btn {
+            display: block;
+            width: 100%;
+            background-color: #0ea5e9;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+            box-sizing: border-box;
+        }
+        .download-btn:hover {
+            background-color: #0284c7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+        }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #64748b; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: #3b82f6; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎬 智慧影音下載神器</h1>
+        
+        <div class="section">
+            <div class="section-title">📦 下載內容說明</div>
+            <p>您即將下載的是一個 <b>Windows 專用免安裝軟體包 (.zip)</b>。</p>
+            <p>解壓縮後，資料夾內包含主程式 <code>desktop_app.exe</code> 以及用於高畫質影音合併的底層工具 <code>ffmpeg.exe</code>。<b>完全無需安裝</b>，點擊主程式即可直接開啟視窗使用，若不再需要，將整個資料夾刪除即可，不會在您的電腦留下任何系統垃圾。</p>
+        </div>
+
+        <div class="section warning">
+            <div class="section-title">⚠️ 智慧財產權與免責聲明</div>
+            <p>本軟體僅供<b>個人離線學習、觀看與研究</b>使用，請嚴格遵守以下規範：</p>
+            <p>1. 請尊重原創作者的智慧財產權，<b>嚴禁將下載的影音內容用於商業營利、二次剪輯發布或公開傳輸</b>。<br>
+               2. 若因不當使用下載檔案而引發任何侵權糾紛，須由使用者自行承擔法律責任，本網站與軟體開發者概不負責。</p>
+        </div>
+
+        <!-- download 屬性會提示瀏覽器直接下載該檔案，不會跳轉畫面 -->
+        <a href="影音下載小程式.zip" class="download-btn" download>⬇️ 同意規範，立即下載軟體</a>
+        
+        <a href="index.html" class="back-link">← 返回智慧基金篩選首頁</a>
+    </div>
+
+</body>
+</html>
